@@ -1,7 +1,7 @@
 import csv
 
 # Filters
-bCities = False
+bCities = True
 bCountries = True
 
 # Constants
