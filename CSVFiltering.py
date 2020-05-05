@@ -1,27 +1,40 @@
 import csv
 
-reader = csv.reader(open(r"GameDevMap.csv"), delimiter=',');
-
+# constants
 citycol = 2
-countycol = 4
+countrycol = 4
 
-country = input("Country: ")
-city = input("City: ")
+def countryFilter(passedList):
+    countryList = csv.reader(open(r"Countries.csv"), delimiter=',');
+    for country in countryList:
+        if country[0] == passedList[countrycol]:
+            return True
 
-filtered = filter(lambda p: p, reader) # does nothing just examples the format
-if country: 
-    filtered = filter(lambda p: country == p[countycol], reader)
-if city: 
-    filtered = filter(lambda p: city == p[citycol], reader)
+    return False
 
-# print to window
-itemCount = 0
-for row in filtered:
-    print(row)
-    itemCount += 1
+def main():
+    reader = csv.reader(open(r"GameDevMap.csv"), delimiter=',');
+    #countryList = csv.reader(open(r"Countries.csv"), delimiter=',');
 
-print("There were " + str(itemCount) + " results.")
+# "United States" == p[countrycol]
+    # for country in countryList:
+    #     filtered = filter(lambda p: p, reader)
+    filtered = filter(lambda p: 
+       countryFilter(p), 
+    reader)
+        #result += filtered
 
-#Write output to file
-outfile = open(r"GameDevMapFiltered.csv",'w', newline="\n")
-csv.writer(outfile, delimiter=',').writerows(filtered)
+    # print to window
+    itemCount = 0
+    for row in filtered:
+        print(row)
+        itemCount += 1
+
+    print("There were " + str(itemCount) + " results.")
+
+    #Write output to file
+    outfile = open(r"GameDevMapFiltered.csv",'w', newline="\n")
+    csv.writer(outfile, delimiter=',').writerows(filtered)
+
+if __name__=="__main__":
+    main()
