@@ -12,29 +12,30 @@ def countryFilter(passedList):
 
     return False
 
+# TODO: refactor to remove duplication
+def citiesFilter(passedList):
+    cityList = csv.reader(open(r"Cities.csv"), delimiter=',');
+    for city in cityList:
+        if city[0] == passedList[citycol]:
+            return True
+
+    return False
+
 def main():
     reader = csv.reader(open(r"GameDevMap.csv"), delimiter=',');
-    #countryList = csv.reader(open(r"Countries.csv"), delimiter=',');
-
-# "United States" == p[countrycol]
-    # for country in countryList:
-    #     filtered = filter(lambda p: p, reader)
-    filtered = filter(lambda p: 
-       countryFilter(p), 
-    reader)
-        #result += filtered
+    filtered = filter(lambda p: countryFilter(p) and citiesFilter(p),  reader)
 
     # print to window
     itemCount = 0
     for row in filtered:
         print(row)
         itemCount += 1
-
     print("There were " + str(itemCount) + " results.")
 
     #Write output to file
-    outfile = open(r"GameDevMapFiltered.csv",'w', newline="\n")
-    csv.writer(outfile, delimiter=',').writerows(filtered)
+    reader = csv.reader(open(r"GameDevMap.csv"), delimiter=',');
+    filtered = filter(lambda p: countryFilter(p) and citiesFilter(p),  reader)
+    csv.writer(open(r"GameDevMapFiltered.csv",'w', newline="\n"), delimiter=',').writerows(filtered)
 
 if __name__=="__main__":
     main()
