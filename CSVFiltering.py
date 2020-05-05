@@ -1,10 +1,17 @@
 import csv
 
-# constants
+# Filters
+bCities = False
+bCountries = True
+
+# Constants
 citycol = 2
 countrycol = 4
 
 def countryFilter(passedList):
+    if not bCountries:
+        return True
+
     countryList = csv.reader(open(r"Countries.csv"), delimiter=',');
     for country in countryList:
         if country[0] == passedList[countrycol]:
@@ -14,6 +21,9 @@ def countryFilter(passedList):
 
 # TODO: refactor to remove duplication
 def citiesFilter(passedList):
+    if not bCities:
+        return True
+
     cityList = csv.reader(open(r"Cities.csv"), delimiter=',');
     for city in cityList:
         if city[0] == passedList[citycol]:
